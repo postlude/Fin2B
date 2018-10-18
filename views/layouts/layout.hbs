@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+    <!-- bootstrap -->
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+    <script>
+        $(document).ready(function(){
+            var timer = setInterval(get_server_time, 1000);
+
+            function get_server_time(){
+                $.ajax({
+                    url: '/ajax/get_server_date',
+                    type: 'GET'
+                })
+                .done(function(result){
+                    console.log('success');
+                    $('#server_time').html(result);
+                })
+                .fail(function(){
+                    console.log('fail');
+                });
+            }
+        });
+    </script>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">Fin2B</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="/password">비밀번호 입력 폼</a></li>
+                <li><a href="#">Google 검색 결과</a></li>
+                <li><a href="#">피보나치 수열</a></li>
+            </ul>
+            <p class="navbar-text navbar-right" id="server_time"></p>
+        </div>
+    </nav>
+    <div class="container">
+        {{{ body }}}
+    </div>
+</body>
+</html>
