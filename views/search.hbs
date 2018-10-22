@@ -1,0 +1,33 @@
+<script>
+    $(document).ready(function(){
+        var check_btn = $('#btn');
+
+        check_btn.click(function(){
+            var search_value = $('#search_value').val();
+
+            $.ajax({
+                url: '/search/ajax_search',
+                type: 'POST',
+                data: {'searchValue' : search_value}
+            })
+            .done(function(result){
+                console.log(result);
+                $('#search_result').html(result);
+            })
+            .fail(function(err){
+                console.log(err);
+            });
+        });
+    });
+</script>
+{{!-- <form action="/search" method="POST"> --}}
+    <div class="form-group">
+        <label for="search_value">검색어 입력</label>
+        <input type="text" class="form-control" id="search_value" name="search_value">
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-default btn-block" id="btn" >Submit</button>
+    </div>
+{{!-- </form> --}}
+
+<div id="search_result"></div>
