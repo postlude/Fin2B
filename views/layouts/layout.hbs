@@ -19,15 +19,14 @@
 
             function get_server_time(){
                 $.ajax({
-                    url: '/ajax/get_server_date',
+                    url: '/server_date/ajax_get',
                     type: 'GET'
                 })
                 .done(function(result){
-                    console.log('success');
                     $('#server_time').html(result);
                 })
-                .fail(function(){
-                    console.log('fail');
+                .fail(function(err){
+                    console.log(err);
                 });
             }
         });
