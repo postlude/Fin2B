@@ -2,7 +2,6 @@ var express = require('express');
 var moment = require('moment-timezone');
 var request = require('request');
 var cheerio = require('cheerio');
-var iconv = require('iconv-lite');
 var router = express.Router();
 
 router.get('/', function(req, res){
@@ -36,48 +35,20 @@ router.get('/search', function(req, res){
 });
 
 router.post('/search', function(req, res){
-    var url = 'https://www.google.co.kr/search?q=' + req.body.search_value;
-    request(url, function(error, response, html){  
+    var url = 'https://www.google.com/search?q=' + req.body.searchValue;
+
+    // encodeURI() 를 호출하지 않고 그냥 url로 사용할 경우 한글 깨짐
+    request(encodeURI(url), function(error, response, body){  
         if (error) {
             throw error
-        };
+        }
 
-        const $ = cheerio.load(html);
-        let searchResult = $('#search').html();
-        
-        // console.log($('div').html());
-        // console.log(searchResult);
-        // res.send(searchResult);
-        // res.send(cheerio.load(html));
-        res.render('searchResult', {'searchResult' : searchResult});
-    });
-    // res.send(url);
-});
+        const $ = cheerio.load(body);
+        var searchResult = $('#search').html();
 
-router.post('/search/ajax_search', function(req, res){
-    var url = 'https://www.google.co.kr/search?q=' + req.body.searchValue;
-    request(url, function(error, response, html){  
-        if (error) {
-            throw error
-        };
-
-        var strContents = new Buffer(html);
-        console.log(iconv.decode(strContents, 'MS949').toString());
-
-        const $ = cheerio.load(html);
-        let searchResult = $('#search').html();
-        
-        
-        // console.log($('div').html());
-        // console.log(searchResult);
         res.send(searchResult);
-        // res.send(cheerio.load(html));
-        // res.render('searchResult', {'searchResult' : searchResult});
     });
-    // res.send(url);
 });
 
-// 참고
-// https://www.youtube.com/watch?v=V3qibfw_5nQ
 
 module.exports = router;
