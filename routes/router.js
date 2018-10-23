@@ -6,7 +6,7 @@ router.get('/', function(req, res){
     res.redirect('password');
 });
 
-router.get('/server_date/ajax_get', function(req, res){
+router.get('/server_time', function(req, res){
     var serverTime = moment(new Date()).tz('Asia/Seoul').format('YYYY년 MM월 DD일 HH시 mm분 ss초');
     res.send(serverTime);
 });
