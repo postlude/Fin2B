@@ -16,7 +16,7 @@ router.get('/password', function(req, res){
     res.render('password');
 });
 
-router.post('/password/ajax_check', function(req, res){
+router.post('/password/check', function(req, res){
     var password = req.body.pwd;
     var reg = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&+=]).{8,}$/;
     // var reg = new RegExp('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&+=]).{8,}$');
