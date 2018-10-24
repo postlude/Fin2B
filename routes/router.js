@@ -59,7 +59,11 @@ router.get('/fibonacci', function(req, res){
 router.post('/fibonacci', function(req, res){
     var inputNum = req.body.piboNum;
     var result = getFibonacci(inputNum);
-    res.send({'inputNum' : inputNum, 'fiboNum' : result});
+    if(result === undefined){
+        res.send(result);
+    }else{
+        res.send({'inputNum' : inputNum, 'fiboNum' : result});
+    }
 });
 
 module.exports = router;

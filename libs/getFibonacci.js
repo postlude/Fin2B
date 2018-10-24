@@ -1,8 +1,9 @@
-function getFibonacci(inputNum){
-    if(inputNum==1 || inputNum==2){
-        return 1;
-    }
-    return getFibonacci(inputNum-2) + getFibonacci(inputNum-1);
-};
+module.exports = function (inputNum){
+    var cache = [0, 1, 1];
 
-module.exports = getFibonacci;
+    for(var index=3; index<=inputNum; index++){
+        cache.push(cache[index-2] + cache[index-1]);
+    }
+
+    return cache[inputNum];
+}
