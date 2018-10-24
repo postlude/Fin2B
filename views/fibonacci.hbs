@@ -11,7 +11,11 @@
                 data: {'piboNum' : pibo_num}
             })
             .done(function(result){
-                $('#print_pibo').html(result.inputNum + '번째 피보나치 수는 ' + result.fiboNum + '입니다.');
+                if(result.inputNum === undefined){
+                    $('#print_pibo').html('올바르지 않은 입력입니다.');
+                }else{
+                    $('#print_pibo').html(result.inputNum + '번째 피보나치 수는 ' + result.fiboNum + '입니다.');
+                }
             })
             .fail(function(err){
                 console.log(err);
