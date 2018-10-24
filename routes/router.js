@@ -1,5 +1,7 @@
 var express = require('express');
 var moment = require('moment-timezone');
+var request = require('request');
+var cheerio = require('cheerio');
 var router = express.Router();
 
 router.get('/', function(req, res){
@@ -25,6 +27,27 @@ router.post('/password/check', function(req, res){
     }else{
         res.send(false);
     }
+});
+
+// google search
+router.get('/search', function(req, res){
+    res.render('search');
+});
+
+router.post('/search', function(req, res){
+    var url = 'https://www.google.com/search?q=' + req.body.searchValue;
+
+    // encodeURI() 를 호출하지 않고 그냥 url로 사용할 경우 한글 깨짐
+    request(encodeURI(url), function(error, response, body){  
+        if (error) {
+            throw error
+        }
+
+        const $ = cheerio.load(body);
+        var searchResult = $('#search').html();
+
+        res.send(searchResult);
+    });
 });
 
 
