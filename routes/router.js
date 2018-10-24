@@ -2,6 +2,7 @@ var express = require('express');
 var moment = require('moment-timezone');
 var request = require('request');
 var cheerio = require('cheerio');
+var getFibonacci = require('../libs/getFibonacci');
 var router = express.Router();
 
 router.get('/', function(req, res){
@@ -50,5 +51,15 @@ router.post('/search', function(req, res){
     });
 });
 
+// fibonacci
+router.get('/fibonacci', function(req, res){
+    res.render('fibonacci');
+});
+
+router.post('/fibonacci', function(req, res){
+    var inputNum = req.body.piboNum;
+    var result = getFibonacci(inputNum);
+    res.send({'inputNum' : inputNum, 'fiboNum' : result});
+});
 
 module.exports = router;
